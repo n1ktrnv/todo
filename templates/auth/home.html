@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Мой список дел{% endblock %}
+{% block content %}
+    <div class="container todo-list-container">
+        <h1 class="heading container__heading">Мой список дел</h1>
+        <a class="button button-fullwidth" href="#">Добавить задачу</a>
+        <ul class="tasks">
+        {% for todo in todo_list %}
+            <li class="task tasks__task">
+                {% if todo['done'] %}
+                    <a class="task__checkbox task__checkbox--active" href="#">Отменить выполнение</a>
+                {% else %}
+                     <a class="task__checkbox" href="#">Выполнить</a>
+                {% endif %}
+
+                <div>
+                    <p class="task__title">{{ todo['title'] }}</p>
+                    <p class="task__description">{{ todo['description'] }}</p>
+                </div>
+
+                {% if todo['done'] %}
+                    <a class="task__favorite task__favorite--active" href="#">Удалить из избранного</a>
+                {% else %}
+                     <a class="task__favorite" href="#">В избранное</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

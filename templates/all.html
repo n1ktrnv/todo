@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Мой список дел{% endblock %}
+
+{% block content %}
+    <div class="container todo-list-container">
+        <h1 class="heading container__heading heading--centered">Мой список дел</h1>
+        {% if count %}
+            <p class="done-count">Выполнено задач: {{ done_count }} из {{ count }}</p>
+        {% else %}
+            <p class="done-count">У вас нет задач</p>
+        {% endif %}
+        <a class="button button-fullwidth" href="/tasks/new">Добавить задачу</a>
+        <ul class="tasks">
+        {% for task in favorites %}
+            <li class="task tasks__task">
+                <a
+                    class="task__checkbox {% if task['done'] %}task__checkbox--active{% endif %}"
+                    href="/tasks/update-done-status/{{ task['id'] }}"
+                >
+                    {% if task['done'] %}
+                        Отменить выполнение
+                    {% else %}
+                        Выполнить
+                    {% endif %}
+                </a>
+                <a class="task__link" href="/tasks/{{ task['id'] }}">
+                    <p class="task__title">{{ task['title'] | truncate(22, True) }}</p>
+                    {% if task['description'] %}
+                        <p class="task__description">{{ task['description'] | truncate(25, True) }}</p>
+                    {% endif %}
+                </a>
+                    <a class="task__favorite task__favorite--active" href="/tasks/update-favorite-status/{{ task['id'] }}">Удалить из избранного</a>
+            </li>
+        {% endfor %}
+        </ul>
+        <ul class="tasks">
+            {% for task in non_favorites %}
+                <li class="task tasks__task">
+                    <a
+                        class="task__checkbox {% if task['done'] %}task__checkbox--active{% endif %}"
+                        href="/tasks/update-done-status/{{ task['id'] }}"
+                    >
+                        {% if task['done'] %}
+                            Отменить выполнение
+                        {% else %}
+                            Выполнить
+                        {% endif %}
+                    </a>
+                    <a class="task__link" href="/tasks/{{ task['id'] }}">
+                       <p class="task__title">{{ task['title'] | truncate(22, True) }}</p>
+                       {% if task['description'] %}
+                           <p class="task__description">{{ task['description'] | truncate(25, True) }}</p>
+                       {% endif %}
+                    </a>
+                        <a class="task__favorite" href="/tasks/update-favorite-status/{{ task['id'] }}">В избранноe</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

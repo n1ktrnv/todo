@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+     <div class="container container--form">
+         <h1 class="heading heading--centered container__heading">Регистрация</h1>
+        <form class="form" method="POST" action="{{ route('register.store') }}">
+            {{ csrf_field }}
+            @if bag().any()
+                <div class="form-messages">
+                    <ul class="form-messages__list">
+                        @for message in bag().messages()
+                            <li class="form-messages__message">{{ message }}</li>
+                        @endfor
+                    </ul>
+                </div>
+            @endif
+            <input class="input form__input" name="name" type="hidden" value="sample name">
+            <input class="input form__input" name="email" type="email" placeholder="Email">
+            <input class="input form__input" name="password" type="password" placeholder="Пароль">
+            <button class="button button-fullwidth form__submit">Зарегистрироваться</button>
+            <a class="button button--text button-fullwidth" href="{{ route('login') }}">Войти</a>
+        </form>
+    </div>
+{% endblock %}

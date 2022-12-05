@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+    <div class="container container--form">
+        <h1 class="heading heading--centered container__heading">Вход</h1>
+        <form class="form" method="POST" action="{{ route('login.store') }}">
+            {{ csrf_field }}
+            @if bag().any()
+                <div class="form-messages">
+                    <ul class="form-messages__list">
+                        @for message in bag().messages()
+                            <li class="form-messages__message">{{ message }}</li>
+                        @endfor
+                    </ul>
+                </div>
+            @endif
+            <input class="input form__input" name="username" type="email" placeholder="Email">
+            <input class="input form__input" name="password" type="password" placeholder="Пароль">
+            <a class="button button--text" href="password_reset">Восстановить пароль</a>
+            <button class="button button-fullwidth form__submit">Войти</button>
+            <a class="button button--text button-fullwidth" href="register">Зарегистрироваться</a>
+        </form>
+    </div>
+{% endblock %}
